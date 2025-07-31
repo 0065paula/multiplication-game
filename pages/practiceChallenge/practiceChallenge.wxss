@@ -3,7 +3,7 @@
   width: 100%;
   background-color: white;
   border-radius: 32rpx;
-  padding: 40rpx 30rpx;
+  padding: 80rpx 30rpx 40rpx;
   box-shadow: 0 8rpx 24rpx rgba(0,0,0,0.08);
   box-sizing: border-box;
   position: relative;

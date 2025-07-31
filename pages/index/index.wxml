@@ -17,7 +17,9 @@
           <block wx:for="{{9}}" wx:for-index="i" wx:key="i">
             <view class="table-row">
               <block wx:for="{{i+1}}" wx:for-index="j" wx:key="j">
-                <view class="table-cell">{{j+1}} × {{i+1}} = {{(j+1)*(i+1)}}</view>
+                <view class="table-cell {{(i+j)%2===0 ? 'cell-even' : 'cell-odd'}}">
+                  {{j+1}} × {{i+1}} = {{(j+1)*(i+1)}}
+                </view>
               </block>
             </view>
           </block>

@@ -22,6 +22,8 @@ page {
   font-weight: bold;
   color: #4080FF;
   margin-bottom: 20rpx;
+  margin-top: 40rpx;
+  text-align: center;
 }
 
 .subtitle {
@@ -69,6 +71,9 @@ page {
   color: #4080FF;
   font-size: 28rpx;
   z-index: 10;
+  padding: 10rpx 20rpx;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 10rpx;
 }
 
 .fade-in {
