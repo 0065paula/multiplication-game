@@ -46,10 +46,15 @@
     "useCompilerPlugins": false,
     "condition": false,
     "swc": false,
-    "disableSWC": true
+    "disableSWC": true,
+    "lazyloadPlaceholderEnable": false,
+    "requiredBackgroundModes": [],
+    "useStaticServer": true,
+    "lazyCodeLoading": "requiredComponents",
+    "requiredPrivateInfos": []
   },
   "compileType": "miniprogram",
-  "libVersion": "2.16.0",
+  "libVersion": "2.30.2",
   "appid": "wxb7980e6f959b9379",
   "projectname": "乘法精灵大挑战",
   "isGameTourist": false,
