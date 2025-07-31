@@ -1,0 +1,47 @@
+<!-- practiceChallenge.wxml -->
+<view class="container">
+  <view class="card">
+    <navigator open-type="navigateBack" class="back-btn">← 返回</navigator>
+    <view class="title">专项练习</view>
+    
+    <!-- 数字选择界面 -->
+    <view class="number-selection" wx:if="{{!selectedNumber}}">
+      <view class="selection-title">选择要练习的数字</view>
+      <view class="number-grid">
+        <block wx:for="{{8}}" wx:key="index">
+          <view class="number-card" bindtap="selectNumber" data-number="{{index+2}}">
+            {{index+2}}
+          </view>
+        </block>
+      </view>
+    </view>
+    
+    <!-- 练习题目界面 -->
+    <view class="challenge-container {{animationClass}}" wx:if="{{selectedNumber}}">
+      <view class="practice-title">专项练习: {{selectedNumber}}的乘法</view>
+      
+      <!-- 问题区域 -->
+      <view class="question-area">
+        <view class="question-formula">{{currentQuestion.num1}} × {{currentQuestion.num2}}</view>
+      </view>
+      
+      <!-- 选项区域 -->
+      <view class="options-area">
+        <block wx:for="{{currentQuestion.options}}" wx:key="index">
+          <view class="option-card" bindtap="checkAnswer" data-answer="{{item}}">
+            {{item}}
+          </view>
+        </block>
+      </view>
+    </view>
+  </view>
+  
+  <!-- 反馈弹窗 -->
+  <view class="feedback-modal {{showFeedback ? '' : 'hidden'}}">
+    <view class="feedback-content">
+      <view class="feedback-icon">{{feedbackIcon}}</view>
+      <view class="feedback-text {{isCorrect ? 'correct' : 'incorrect'}}">{{feedbackText}}</view>
+      <button class="next-btn {{isCorrect ? 'btn-green' : 'btn-blue'}}" bindtap="nextQuestion">下一题</button>
+    </view>
+  </view>
+</view>

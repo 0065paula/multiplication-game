@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>乘法精灵大挑战</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=ZCOOL+XiaoWei&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+        .title-font {
+            font-family: 'ZCOOL XiaoWei', serif;
+        }
+        .btn {
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .btn:active {
+            transform: translateY(-1px);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+        .option-card:hover {
+            transform: scale(1.05);
+            border-color: #60a5fa;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in {
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+        @keyframes celebrate {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2) rotate(5deg); }
+            100% { transform: scale(1); }
+        }
+        .celebrate {
+            animation: celebrate 0.4s ease-in-out;
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+        .shake {
+            animation: shake 0.5s ease-in-out;
+        }
+        .gray-apple {
+            filter: grayscale(100%);
+            opacity: 0.2;
+        }
+        .multiplication-table td {
+            padding: 2px 6px;
+            border: 1px solid #e5e7eb;
+            font-size: 0.75rem; /* 12px */
+            text-align: center;
+            white-space: nowrap;
+        }
+        .multiplication-table {
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body class="bg-blue-50 text-gray-800 flex items-center justify-center min-h-screen p-4">
+
+    <div id="app" class="w-full max-w-3xl mx-auto bg-white rounded-2xl shadow-xl p-6 relative overflow-hidden">
+
+        <!-- 主菜单界面 -->
+        <div id="home-screen" class="text-center">
+            <h1 class="text-4xl font-bold text-blue-600 mb-2 title-font">乘法精灵大挑战</h1>
+            <p class="text-gray-500 mb-8">选择一个模式开始学习吧！</p>
+            <!-- **UPDATED**: 调整了按钮顺序 -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <button onclick="startFreeExploration()" class="btn bg-purple-400 text-white p-4 rounded-xl text-lg font-bold shadow-md">🎨 自由探索</button>
+                <button onclick="startVisualChallenge()" class="btn bg-green-400 text-white p-4 rounded-xl text-lg font-bold shadow-md">🍎 视觉理解</button>
+                <button onclick="showScreen('practice-mode-selection-screen')" class="btn bg-blue-500 text-white p-4 rounded-xl text-lg font-bold shadow-md">✏️ 专项练习</button>
+            </div>
+            <div class="mt-8 overflow-x-auto">
+                <h3 class="text-xl font-bold text-gray-700 mb-4 title-font">九九乘法口诀表</h3>
+                <div id="multiplication-table-container"></div>
+            </div>
+        </div>
+
+        <!-- 专项练习模式 - 数字选择 -->
+        <div id="practice-mode-selection-screen" class="hidden">
+            <button onclick="showScreen('home-screen')" class="absolute top-4 left-4 text-blue-500 hover:text-blue-700">← 返回</button>
+            <h2 class="text-2xl font-bold text-center mb-6 text-blue-600 title-font">选择要练习的数字</h2>
+            <div id="practice-number-selection" class="grid grid-cols-4 gap-3">
+                <!-- 数字按钮会由JS动态生成 -->
+            </div>
+        </div>
+        
+        <!-- 自由探索模式 -->
+        <div id="free-exploration-screen" class="hidden">
+            <button onclick="showScreen('home-screen')" class="absolute top-4 left-4 text-blue-500 hover:text-blue-700">← 返回</button>
+            <h2 class="text-2xl font-bold text-center mb-4 text-purple-600 title-font">自由探索模式</h2>
+            <div id="exploration-grid-container" class="w-full text-center">
+                <div id="exploration-grid" class="p-2 bg-gray-100 rounded-lg inline-block shadow-inner">
+                    <!-- 10x10 苹果网格会由JS动态生成 -->
+                </div>
+                <p id="exploration-formula" class="text-gray-600 mt-2 font-semibold text-2xl h-8"></p>
+            </div>
+        </div>
+
+        <!-- 通用答题界面容器 -->
+        <div id="challenge-container" class="hidden">
+            <!-- 题目和选项会插入到这里 -->
+        </div>
+
+        <!-- 结果反馈弹窗 -->
+        <div id="feedback-modal" class="hidden absolute inset-0 bg-white bg-opacity-90 flex items-center justify-center text-center p-8">
+            <div>
+                <div id="feedback-icon" class="text-8xl mb-4"></div>
+                <p id="feedback-text" class="text-2xl font-bold"></p>
+                <button id="next-question-btn" class="mt-6 btn bg-green-500 text-white py-2 px-6 rounded-lg">下一题</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // --- 游戏状态 (已简化) ---
+        let gameState = {
+            currentScreen: 'home-screen',
+            currentGameMode: null, // 'visual' or 'practice'
+            currentPracticeNumber: null,
+            currentQuestion: null,
+        };
+
+        // --- DOM 元素引用 ---
+        const screens = document.querySelectorAll('#app > div:not(#feedback-modal)');
+        const challengeContainer = document.getElementById('challenge-container');
+        const feedbackModal = document.getElementById('feedback-modal');
+
+        // --- 核心功能 ---
+
+        function showScreen(screenId) {
+            screens.forEach(screen => screen.classList.add('hidden'));
+            document.getElementById(screenId).classList.remove('hidden');
+            gameState.currentScreen = screenId;
+
+            if (screenId === 'practice-mode-selection-screen') {
+                renderPracticeNumberSelection();
+            }
+        }
+        
+        function goHome() {
+            challengeContainer.innerHTML = '';
+            challengeContainer.classList.add('hidden');
+            showScreen('home-screen');
+        }
+
+        // --- 渲染功能 ---
+
+        function renderPracticeNumberSelection() {
+            const container = document.getElementById('practice-number-selection');
+            container.innerHTML = '';
+            for (let i = 2; i <= 9; i++) {
+                let buttonHTML = `
+                    <button onclick="startPracticeChallenge(${i})" class="btn p-4 rounded-lg text-center border-2 bg-white border-gray-200 hover:border-blue-400">
+                        <span class="text-3xl font-bold text-gray-700">${i}</span>
+                    </button>
+                `;
+                container.innerHTML += buttonHTML;
+            }
+        }
+        
+        function renderMultiplicationTable() {
+            const container = document.getElementById('multiplication-table-container');
+            let tableHTML = '<table class="multiplication-table">';
+            for (let i = 1; i <= 9; i++) {
+                tableHTML += '<tr>';
+                for (let j = 1; j <= i; j++) {
+                    tableHTML += `<td>${j} × ${i} = ${j * i}</td>`;
+                }
+                tableHTML += '</tr>';
+            }
+            tableHTML += '</table>';
+            container.innerHTML = tableHTML;
+        }
+
+
+        // --- 游戏模式逻辑 ---
+        
+        function createQuestionLayout(title) {
+            challengeContainer.classList.remove('hidden');
+            challengeContainer.innerHTML = `
+                <div class="fade-in">
+                    <button onclick="goHome()" class="absolute top-4 left-4 text-blue-500 hover:text-blue-700">← 主菜单</button>
+                    <h2 class="text-2xl font-bold text-center mb-4 text-gray-700 title-font">${title}</h2>
+                    <div id="question-area" class="mb-6 min-h-[120px] flex items-center justify-center"></div>
+                    <div id="options-area" class="grid grid-cols-2 gap-4"></div>
+                </div>
+            `;
+        }
+
+        function startVisualChallenge() {
+            showScreen('challenge-container');
+            gameState.currentGameMode = 'visual';
+            createQuestionLayout('视觉理解模式');
+            generateAndDisplayQuestion();
+        }
+        
+        function startPracticeChallenge(number) {
+            showScreen('challenge-container');
+            gameState.currentGameMode = 'practice';
+            gameState.currentPracticeNumber = number;
+            createQuestionLayout(`专项练习: ${number}的乘法`);
+            generateAndDisplayQuestion();
+        }
+        
+        function startFreeExploration() {
+            showScreen('free-exploration-screen');
+            renderExplorationGrid();
+            resetGridHighlight(); // 初始化显示
+        }
+        
+        function renderExplorationGrid() {
+            const container = document.getElementById('exploration-grid');
+            if (container.children.length > 0) return; // 避免重复渲染
+
+            container.innerHTML = '';
+            for (let row = 0; row < 10; row++) {
+                let rowHTML = '<div class="flex justify-center">';
+                for (let col = 0; col < 10; col++) {
+                    rowHTML += `<div class="apple-cell w-8 h-8 flex items-center justify-center text-2xl" data-row="${row}" data-col="${col}"></div>`;
+                }
+                rowHTML += '</div>';
+                container.innerHTML += rowHTML;
+            }
+            container.addEventListener('mouseover', handleGridHover);
+            container.addEventListener('mouseleave', resetGridHighlight);
+        }
+
+        function handleGridHover(event) {
+            const target = event.target.closest('.apple-cell');
+            if (!target) return;
+
+            const hoverRow = parseInt(target.dataset.row);
+            const hoverCol = parseInt(target.dataset.col);
+
+            const allApples = document.querySelectorAll('#exploration-grid .apple-cell');
+            allApples.forEach(apple => {
+                const row = parseInt(apple.dataset.row);
+                const col = parseInt(apple.dataset.col);
+
+                if (row <= hoverRow && col <= hoverCol) {
+                    apple.classList.remove('gray-apple');
+                    apple.innerHTML = '🍎';
+                } else {
+                    apple.classList.add('gray-apple');
+                    apple.innerHTML = '🍏';
+                }
+            });
+
+            const formulaDisplay = document.getElementById('exploration-formula');
+            const num1 = hoverRow + 1;
+            const num2 = hoverCol + 1;
+            formulaDisplay.innerHTML = `${num1} × ${num2} = ${num1 * num2}`;
+        }
+
+        function resetGridHighlight() {
+            const allApples = document.querySelectorAll('#exploration-grid .apple-cell');
+            allApples.forEach(apple => {
+                apple.classList.add('gray-apple');
+                apple.innerHTML = '🍏';
+            });
+            const formulaDisplay = document.getElementById('exploration-formula');
+            formulaDisplay.textContent = '移动鼠标来探索吧！';
+        }
+
+
+        function generateAndDisplayQuestion() {
+            let num1, num2;
+            if (gameState.currentGameMode === 'visual') {
+                num1 = Math.floor(Math.random() * 9) + 1; // 1-9
+                num2 = Math.floor(Math.random() * 9) + 1; // 1-9
+            } else { // practice
+                num1 = gameState.currentPracticeNumber;
+                num2 = Math.floor(Math.random() * 9) + 1; // 1-9
+            }
+            
+            const correctAnswer = num1 * num2;
+            const options = generateOptions(correctAnswer);
+            gameState.currentQuestion = { num1, num2, correctAnswer, options };
+
+            displayQuestion(gameState.currentQuestion);
+        }
+
+        function generateOptions(correctAnswer) {
+            const options = new Set([correctAnswer]);
+            while (options.size < 4) {
+                const range = Math.max(10, correctAnswer * 0.5);
+                const wrongAnswer = correctAnswer + Math.floor(Math.random() * range) - Math.floor(range / 2);
+                if (wrongAnswer !== correctAnswer && wrongAnswer > 0) {
+                    options.add(wrongAnswer);
+                }
+            }
+            return Array.from(options).sort(() => Math.random() - 0.5);
+        }
+
+        function displayQuestion(q) {
+            const questionArea = document.getElementById('question-area');
+            const optionsArea = document.getElementById('options-area');
+            questionArea.innerHTML = '';
+            optionsArea.innerHTML = '';
+
+            if (gameState.currentGameMode === 'visual') {
+                let gridHTML = '';
+                for (let row = 0; row < 10; row++) {
+                    let rowHTML = '<div class="flex justify-center">';
+                    for (let col = 0; col < 10; col++) {
+                        const isRedApple = row < q.num1 && col < q.num2;
+                        const appleClass = isRedApple ? '' : 'gray-apple';
+                        rowHTML += `<div class="w-8 h-8 flex items-center justify-center text-2xl ${appleClass}">${isRedApple ? '🍎' : '🍏'}</div>`;
+                    }
+                    rowHTML += '</div>';
+                    gridHTML += rowHTML;
+                }
+
+                questionArea.innerHTML = `
+                    <div class="w-full text-center">
+                        <div class="p-2 bg-gray-100 rounded-lg inline-block shadow-inner">
+                            ${gridHTML}
+                        </div>
+                        <p class="text-gray-600 mt-2 font-semibold text-xl">${q.num1} × ${q.num2} = ?</p>
+                    </div>
+                `;
+            } else {
+                questionArea.innerHTML = `<p class="text-5xl font-bold text-center text-blue-800">${q.num1} × ${q.num2}</p>`;
+            }
+
+            q.options.forEach(option => {
+                optionsArea.innerHTML += `
+                    <button onclick="checkAnswer(${option})" class="option-card btn bg-white p-6 rounded-xl border-2 border-gray-200 text-2xl font-bold">${option}</button>
+                `;
+            });
+        }
+
+        function checkAnswer(userAnswer) {
+            const q = gameState.currentQuestion;
+            const isCorrect = userAnswer === q.correctAnswer;
+            showFeedback(isCorrect);
+        }
+
+        function showFeedback(isCorrect) {
+            const icon = document.getElementById('feedback-icon');
+            const text = document.getElementById('feedback-text');
+            const btn = document.getElementById('next-question-btn');
+            
+            if (isCorrect) {
+                icon.innerHTML = '🎉';
+                text.textContent = '太棒了，回答正确！';
+                text.className = 'text-2xl font-bold text-green-600';
+                btn.className = 'mt-6 btn bg-green-500 text-white py-2 px-6 rounded-lg';
+                challengeContainer.querySelector('.fade-in').classList.add('celebrate');
+            } else {
+                icon.innerHTML = '😥';
+                const q = gameState.currentQuestion;
+                text.innerHTML = `再想想哦~<br>正确答案是: ${q.num1} × ${q.num2} = ${q.correctAnswer}`;
+                text.className = 'text-2xl font-bold text-red-600';
+                btn.className = 'mt-6 btn bg-blue-500 text-white py-2 px-6 rounded-lg';
+                challengeContainer.querySelector('.fade-in').classList.add('shake');
+            }
+            
+            feedbackModal.classList.remove('hidden');
+            feedbackModal.classList.add('fade-in');
+
+            btn.onclick = () => {
+                feedbackModal.classList.add('hidden');
+                challengeContainer.querySelector('.fade-in').className = 'fade-in';
+                if (gameState.currentGameMode) {
+                    generateAndDisplayQuestion();
+                } else {
+                    goHome();
+                }
+            };
+        }
+
+        // --- 初始化 ---
+        function init() {
+            showScreen('home-screen');
+            renderMultiplicationTable();
+        }
+
+        // 页面加载后立即初始化游戏
+        window.onload = init;
+
+    </script>
+</body>
+</html>

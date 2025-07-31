@@ -1,0 +1,57 @@
+/* freeExploration.wxss */
+.card {
+  width: 100%;
+  background-color: white;
+  border-radius: 32rpx;
+  padding: 40rpx 30rpx;
+  box-shadow: 0 8rpx 24rpx rgba(0,0,0,0.08);
+  box-sizing: border-box;
+  position: relative;
+}
+
+.exploration-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20rpx;
+}
+
+.grid-container {
+  width: 100%;
+  background-color: #f3f4f6;
+  border-radius: 16rpx;
+  padding: 20rpx;
+  box-shadow: inset 0 2rpx 6rpx rgba(0,0,0,0.1);
+  box-sizing: border-box;
+}
+
+.apple-grid {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.grid-row {
+  display: flex;
+  justify-content: center;
+}
+
+.apple-cell {
+  width: 50rpx;
+  height: 50rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32rpx;
+}
+
+.formula-display {
+  margin-top: 30rpx;
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #555;
+  height: 60rpx;
+  text-align: center;
+}

@@ -1,0 +1,45 @@
+<!-- visualChallenge.wxml -->
+<view class="container">
+  <view class="card">
+    <navigator open-type="navigateBack" class="back-btn">← 返回</navigator>
+    <view class="title">视觉理解模式</view>
+    
+    <view class="challenge-container {{animationClass}}">
+      <!-- 问题区域 -->
+      <view class="question-area">
+        <view class="grid-container">
+          <view class="apple-grid">
+            <block wx:for="{{10}}" wx:for-index="row" wx:key="row">
+              <view class="grid-row">
+                <block wx:for="{{10}}" wx:for-index="col" wx:key="col">
+                  <view class="apple-cell {{row < currentQuestion.num1 && col < currentQuestion.num2 ? '' : 'gray-apple'}}">
+                    {{row < currentQuestion.num1 && col < currentQuestion.num2 ? '🍎' : '🍏'}}
+                  </view>
+                </block>
+              </view>
+            </block>
+          </view>
+        </view>
+        <view class="formula">{{currentQuestion.num1}} × {{currentQuestion.num2}} = ?</view>
+      </view>
+      
+      <!-- 选项区域 -->
+      <view class="options-area">
+        <block wx:for="{{currentQuestion.options}}" wx:key="index">
+          <view class="option-card" bindtap="checkAnswer" data-answer="{{item}}">
+            {{item}}
+          </view>
+        </block>
+      </view>
+    </view>
+  </view>
+  
+  <!-- 反馈弹窗 -->
+  <view class="feedback-modal {{showFeedback ? '' : 'hidden'}}">
+    <view class="feedback-content">
+      <view class="feedback-icon">{{feedbackIcon}}</view>
+      <view class="feedback-text {{isCorrect ? 'correct' : 'incorrect'}}">{{feedbackText}}</view>
+      <button class="next-btn {{isCorrect ? 'btn-green' : 'btn-blue'}}" bindtap="nextQuestion">下一题</button>
+    </view>
+  </view>
+</view>

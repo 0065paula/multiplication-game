@@ -1,0 +1,146 @@
+/* practiceChallenge.wxss */
+.card {
+  width: 100%;
+  background-color: white;
+  border-radius: 32rpx;
+  padding: 40rpx 30rpx;
+  box-shadow: 0 8rpx 24rpx rgba(0,0,0,0.08);
+  box-sizing: border-box;
+  position: relative;
+}
+
+.number-selection {
+  width: 100%;
+}
+
+.selection-title {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #555;
+  margin-bottom: 30rpx;
+  text-align: center;
+}
+
+.number-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20rpx;
+}
+
+.number-card {
+  background-color: white;
+  border: 2rpx solid #e5e7eb;
+  border-radius: 16rpx;
+  padding: 30rpx 0;
+  text-align: center;
+  font-size: 40rpx;
+  font-weight: bold;
+  box-shadow: 0 2rpx 8rpx rgba(0,0,0,0.05);
+}
+
+.number-card:active {
+  background-color: #f0f9ff;
+  border-color: #60a5fa;
+}
+
+.challenge-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.practice-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #555;
+  margin-bottom: 30rpx;
+  text-align: center;
+}
+
+.question-area {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200rpx;
+  margin-bottom: 40rpx;
+}
+
+.question-formula {
+  font-size: 80rpx;
+  font-weight: bold;
+  color: #3b82f6;
+}
+
+.options-area {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20rpx;
+}
+
+.option-card {
+  background-color: white;
+  border: 2rpx solid #e5e7eb;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  text-align: center;
+  font-size: 40rpx;
+  font-weight: bold;
+  box-shadow: 0 2rpx 8rpx rgba(0,0,0,0.05);
+  transition: all 0.2s ease;
+}
+
+.option-card:active {
+  transform: scale(0.98);
+  background-color: #f9f9f9;
+}
+
+.feedback-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.hidden {
+  display: none;
+}
+
+.feedback-content {
+  text-align: center;
+  padding: 40rpx;
+}
+
+.feedback-icon {
+  font-size: 120rpx;
+  margin-bottom: 20rpx;
+}
+
+.feedback-text {
+  font-size: 36rpx;
+  font-weight: bold;
+  margin-bottom: 40rpx;
+}
+
+.correct {
+  color: #10b981;
+}
+
+.incorrect {
+  color: #ef4444;
+}
+
+.next-btn {
+  padding: 20rpx 60rpx;
+  border-radius: 16rpx;
+  color: white;
+  font-weight: bold;
+}

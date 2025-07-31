@@ -1,0 +1,28 @@
+<!-- index.wxml -->
+<view class="container">
+  <view class="card">
+    <view class="title">乘法精灵大挑战</view>
+    <view class="subtitle">选择一个模式开始学习吧！</view>
+    
+    <view class="button-group">
+      <button class="btn btn-purple" bindtap="startFreeExploration">🎨 自由探索</button>
+      <button class="btn btn-green" bindtap="startVisualChallenge">🍎 视觉理解</button>
+      <button class="btn btn-blue" bindtap="showPracticeSelection">✏️ 专项练习</button>
+    </view>
+    
+    <view class="multiplication-table-container">
+      <view class="table-title">九九乘法口诀表</view>
+      <scroll-view scroll-x="true" class="table-scroll">
+        <view class="multiplication-table">
+          <block wx:for="{{9}}" wx:for-index="i" wx:key="i">
+            <view class="table-row">
+              <block wx:for="{{i+1}}" wx:for-index="j" wx:key="j">
+                <view class="table-cell">{{j+1}} × {{i+1}} = {{(j+1)*(i+1)}}</view>
+              </block>
+            </view>
+          </block>
+        </view>
+      </scroll-view>
+    </view>
+  </view>
+</view>

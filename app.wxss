@@ -1,0 +1,106 @@
+/**app.wxss**/
+page {
+  font-family: 'PingFang SC', 'Helvetica Neue', Helvetica, 'Droid Sans Fallback', 'Microsoft Yahei', sans-serif;
+  background-color: #EBF5FF;
+  color: #333;
+  height: 100%;
+  width: 100%;
+}
+
+.container {
+  width: 100%;
+  padding: 30rpx;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.title {
+  font-size: 48rpx;
+  font-weight: bold;
+  color: #4080FF;
+  margin-bottom: 20rpx;
+}
+
+.subtitle {
+  font-size: 28rpx;
+  color: #888;
+  margin-bottom: 60rpx;
+}
+
+.btn {
+  transition: all 0.2s ease;
+  margin-bottom: 20rpx;
+  width: 100%;
+  border-radius: 16rpx;
+  font-size: 32rpx;
+  font-weight: bold;
+  padding: 24rpx 0;
+  text-align: center;
+  box-shadow: 0 4rpx 12rpx rgba(0,0,0,0.1);
+}
+
+.btn-purple {
+  background-color: #A78BFA;
+  color: white;
+}
+
+.btn-green {
+  background-color: #4ADE80;
+  color: white;
+}
+
+.btn-blue {
+  background-color: #60A5FA;
+  color: white;
+}
+
+.btn:active {
+  transform: translateY(2rpx);
+  box-shadow: 0 2rpx 6rpx rgba(0,0,0,0.1);
+}
+
+.back-btn {
+  position: absolute;
+  top: 20rpx;
+  left: 20rpx;
+  color: #4080FF;
+  font-size: 28rpx;
+  z-index: 10;
+}
+
+.fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10rpx); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes celebrate {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.2) rotate(5deg); }
+  100% { transform: scale(1); }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-10rpx); }
+  20%, 40%, 60%, 80% { transform: translateX(10rpx); }
+}
+
+.celebrate {
+  animation: celebrate 0.4s ease-in-out;
+}
+
+.shake {
+  animation: shake 0.5s ease-in-out;
+}
+
+.gray-apple {
+  filter: grayscale(100%);
+  opacity: 0.2;
+}
