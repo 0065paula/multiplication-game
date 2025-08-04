@@ -1,9 +1,9 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/practiceChallenge/practiceChallenge",
     "pages/freeExploration/freeExploration",
-    "pages/visualChallenge/visualChallenge",
-    "pages/practiceChallenge/practiceChallenge"
+    "pages/visualChallenge/visualChallenge"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -13,5 +13,12 @@
   },
   "style": "v2",
   "sitemapLocation": "sitemap.json",
-  "lazyCodeLoading": "requiredComponents"
+  "debug": true,
+  "lazyCodeLoading": "requiredComponents",
+  "permission": {
+    "scope.userLocation": {
+      "desc": "你的位置信息将用于小程序位置接口的效果展示"
+    }
+  },
+  "usingComponents": {}
 }

@@ -1,31 +1,14 @@
 # 乘法精灵大挑战
 
-这是一个微信小程序项目，旨在帮助小朋友可视化地感知乘法并进行计算练习。
+## 项目说明
+这是一个微信小程序项目，帮助儿童学习乘法表。
 
-## 功能特点
+## 问题排查记录
 
-- **自由探索模式**：通过点击或滑动探索乘法表格，直观感受乘法的概念
-- **视觉理解模式**：通过苹果网格可视化展示乘法，并提供选择题
-- **专项练习模式**：可选择特定数字进行乘法练习
-
-## 项目结构
-
-- `app.js`：小程序入口文件
-- `app.json`：小程序全局配置
-- `app.wxss`：小程序全局样式
-- `pages/`：小程序页面
-  - `index/`：首页
-  - `freeExploration/`：自由探索模式
-  - `visualChallenge/`：视觉理解模式
-  - `practiceChallenge/`：专项练习模式
-
-## 如何使用
-
-1. 克隆本仓库
-2. 使用微信开发者工具导入项目
-3. 在project.config.json中更新您的appid
-4. 编译并预览
-
-## 开发者
-
-PYology
+### 2023-08-04 路由错误修复
+- 问题：真机调试时无法渲染内容，出现路由错误 `routeDone with a webviewId 19 is not found`
+- 解决方案：
+  1. 统一项目配置：确保`project.config.json`和`project.private.config.json`中的项目名称和基础库版本一致
+  2. 移除组件按需注入配置：从`project.config.json`和`app.json`中移除`lazyCodeLoading`配置
+  3. 为所有页面添加`.json`配置文件
+  4. 在`app.json`中添加`debug: true`以启用调试模式

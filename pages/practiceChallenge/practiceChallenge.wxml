@@ -5,35 +5,40 @@
     <view class="title">专项练习</view>
     
     <!-- 数字选择界面 -->
-    <view class="number-selection" wx:if="{{!selectedNumber}}">
-      <view class="selection-title">选择要练习的数字</view>
-      <view class="number-grid">
-        <block wx:for="{{8}}" wx:key="index">
-          <view class="number-card" bindtap="selectNumber" data-number="{{index+2}}">
-            {{index+2}}
-          </view>
-        </block>
+    <block wx:if="{{!selectedNumber}}">
+      <view class="number-selection">
+        <view class="selection-title">选择要练习的数字</view>
+        <view class="number-grid">
+          <view class="number-card" bindtap="selectNumber" data-number="2">2</view>
+          <view class="number-card" bindtap="selectNumber" data-number="3">3</view>
+          <view class="number-card" bindtap="selectNumber" data-number="4">4</view>
+          <view class="number-card" bindtap="selectNumber" data-number="5">5</view>
+          <view class="number-card" bindtap="selectNumber" data-number="6">6</view>
+          <view class="number-card" bindtap="selectNumber" data-number="7">7</view>
+          <view class="number-card" bindtap="selectNumber" data-number="8">8</view>
+          <view class="number-card" bindtap="selectNumber" data-number="9">9</view>
+        </view>
       </view>
-    </view>
+    </block>
     
     <!-- 练习题目界面 -->
-    <view class="challenge-container {{animationClass}}" wx:if="{{selectedNumber}}">
-      <view class="practice-title">专项练习: {{selectedNumber}}的乘法</view>
-      
-      <!-- 问题区域 -->
-      <view class="question-area">
-        <view class="question-formula">{{currentQuestion.num1}} × {{currentQuestion.num2}}</view>
-      </view>
-      
-      <!-- 选项区域 -->
-      <view class="options-area">
-        <block wx:for="{{currentQuestion.options}}" wx:key="index">
-          <view class="option-card" bindtap="checkAnswer" data-answer="{{item}}">
+    <block wx:else>
+      <view class="challenge-container {{animationClass}}">
+        <view class="practice-title">专项练习: {{selectedNumber}}的乘法</view>
+        
+        <!-- 问题区域 -->
+        <view class="question-area">
+          <view class="question-formula">{{currentQuestion.num1}} × {{currentQuestion.num2}}</view>
+        </view>
+        
+        <!-- 选项区域 -->
+        <view class="options-area">
+          <view wx:for="{{currentQuestion.options}}" wx:key="*this" class="option-card" bindtap="checkAnswer" data-answer="{{item}}">
             {{item}}
           </view>
-        </block>
+        </view>
       </view>
-    </view>
+    </block>
   </view>
   
   <!-- 反馈弹窗 -->

@@ -10,9 +10,56 @@ Page({
     animationClass: 'fade-in'
   },
   
+  onLoad: function(options) {
+    console.log('页面加载成功', options);
+    // 初始化页面数据
+    this.setData({
+      selectedNumber: null,
+      currentQuestion: null,
+      showFeedback: false
+    });
+  },
+  
+  onReady: function() {
+    console.log('页面初次渲染完成');
+  },
+  
+  onShow: function() {
+    console.log('页面显示');
+  },
+  
+  onHide: function() {
+    console.log('页面隐藏');
+  },
+  
+  onUnload: function() {
+    console.log('页面卸载');
+  },
+  
+  onPullDownRefresh: function() {
+    console.log('用户下拉刷新');
+    wx.stopPullDownRefresh();
+  },
+  
+  onShareAppMessage: function() {
+    return {
+      title: '乘法精灵大挑战 - 专项练习',
+      path: '/pages/practiceChallenge/practiceChallenge'
+    };
+  },
+  
+  onPageScroll: function(obj) {
+    // console.log('页面滚动', obj);
+  },
+  
+  onError: function(err) {
+    console.error('页面错误', err);
+  },
+  
   // 选择要练习的数字
   selectNumber: function(e) {
-    const number = e.currentTarget.dataset.number;
+    const number = parseInt(e.currentTarget.dataset.number);
+    console.log('选择数字:', number);
     this.setData({
       selectedNumber: number
     });
@@ -30,6 +77,8 @@ Page({
     
     // 生成选项（包括正确答案）
     const options = this.generateOptions(correctAnswer);
+    
+    console.log('生成问题:', num1, 'x', num2, '=', correctAnswer);
     
     this.setData({
       currentQuestion: {
@@ -63,8 +112,10 @@ Page({
   
   // 检查答案
   checkAnswer: function(e) {
-    const userAnswer = e.currentTarget.dataset.answer;
+    const userAnswer = parseInt(e.currentTarget.dataset.answer);
     const isCorrect = userAnswer === this.data.currentQuestion.correctAnswer;
+    
+    console.log('用户答案:', userAnswer, '正确答案:', this.data.currentQuestion.correctAnswer, '是否正确:', isCorrect);
     
     let feedbackIcon, feedbackText, animationClass;
     

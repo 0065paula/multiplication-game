@@ -1,4 +1,10 @@
 /* practiceChallenge.wxss */
+page {
+  height: 100%;
+  width: 100%;
+  overflow-x: hidden;
+}
+
 .card {
   width: 100%;
   background-color: white;
@@ -143,4 +149,14 @@
   border-radius: 16rpx;
   color: white;
   font-weight: bold;
+}
+
+.btn-green {
+  background-color: #4ADE80;
+  color: white;
+}
+
+.btn-blue {
+  background-color: #60A5FA;
+  color: white;
 }
